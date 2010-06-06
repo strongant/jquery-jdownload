@@ -12,6 +12,7 @@
 	$.fn.jDownload = function(settings){
 		
 		var config = {  
+			root         : "/",
 			filePath     : null,
 			event        : "click", // default click event??
 			dialogTitle  : "jDownload",
@@ -85,11 +86,11 @@
 			// if filePath is not specified then use the href attribute
 			var filePath = (settings.filePath == null) ? $(this).attr('href') : settings.filePath;
 			
-			dialog.html('<p>Fetching File...</p><img src="jdownload/loader.gif" alt="Loading" />');
+			dialog.html('<p>Fetching File...</p><img src="'+settings.root+'jDownload/loader.gif" alt="Loading" />');
 			
 			$.ajax({
 				type : 'GET',
-				url  : 'jDownload/jDownload.php',
+				url  : settings.root+'jDownload/jDownload.php',
 				data : 'action=download&path='+filePath,
 				success : function(data) {
 					
@@ -102,7 +103,8 @@
 						
 							if(settings.showfileInfo == true) {
 								
-								var url  = "jDownload/jDownload.php?action=info&path="+filePath;
+								var url  = settings.root+'jDownload/jDownload.php?action=info&path='+filePath;
+							
 							
 								// get file information
 								$.getJSON(url, function(data) {
@@ -123,7 +125,7 @@
 							}
 	
 						}
-					}, 750);
+					}, 200);
 				}
 		
 			});
@@ -140,7 +142,7 @@
 			
 			
 			// change iframe src to fieDownload.php with filePath as query string?? 
-			iframe.attr('src', "jDownload/jDownload.php?action=download&path="+dialog.data('jDownloadData').filePath);
+			iframe.attr('src', settings.root+'jDownload/jDownload.php?action=download&path='+dialog.data('jDownloadData').filePath);
 			
 			// Close dialog
 			dialog.dialog('close');
