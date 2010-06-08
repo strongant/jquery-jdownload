@@ -16,7 +16,7 @@
 			filePath     : null,
 			event        : "click", // default click event??
 			dialogTitle  : "jDownload",
-			dialogDesc   : $(this).attr('title') ? $(this).attr('title') : 'Download the file now?',
+			dialogDesc   : 'Download the file now?',
 			dialogWidth  : 400,
 			dialogHeight : 'auto',
 			dialogModal  : true,
@@ -81,6 +81,9 @@
 				settings.start();
 			}
 			
+			var _this = $(this);
+			
+			
 			dialog.html("");
 		
 			// if filePath is not specified then use the href attribute
@@ -119,8 +122,10 @@
 									// remove any old file info & error messages
 									$('.jDownloadInfo, .jDownloadError').remove();
 									
+									var desc = (_this.attr('title').length > 0) ? _this.attr('title') : 'Download the file now?';
+									
 									// append new file info
-									dialog.html('<p>'+settings.dialogDesc+'</p>'+html);
+									dialog.html('<p>'+desc+'</p>'+html);
 								});
 							}
 	
