@@ -20,7 +20,6 @@
 				"txt" => "text/plain",
 				"html" => "text/html",
 				"htm" => "text/html",
-				"exe" => "application/octet-stream",
 				"zip" => "application/zip",
 				"doc" => "application/msword",
 				"xls" => "application/vnd.ms-excel",
@@ -29,11 +28,15 @@
 				"png" => "image/png",
 				"jpeg"=> "image/jpg",
 				"jpg" =>  "image/jpg",
-				"php" => "text/plain"
 			);
 			
 			// Get the extension of the file
 			$ext = substr($file_path, strrpos($file_path, '.') + 1);
+			
+			if(!array_key_exists($ext, $mime_types)){
+				echo json_encode(array('error'=>'denied'));
+				die;
+			}
 			
 			// call appropriate function
 			switch($_GET['action']) {
