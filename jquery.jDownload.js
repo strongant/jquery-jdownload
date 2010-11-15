@@ -111,21 +111,33 @@
 							
 								// get file information
 								$.getJSON(url, function(data) {
+								
+									// Check to see if file is not allowed
+									if(data.error == 'denied'){
 									
-									// parse JSON
-									var html  = "<div class=\"jDownloadInfo\">";
+										// append new file info
+										dialog.html('<p class=\"jDownloadError\">This file type is not allowed.</p>');
+									
+									}else{
+										
+										// parse JSON
+										var html  = "<div class=\"jDownloadInfo\">";
 										html += "<p><span>File Name:</span> "+data.filename+"</p>";
 										html += "<p><span>File Type:</span> "+data.filetype+"</p>";
 									    html += "<p><span>File Size:</span> "+data.filesize+" KB</p>";
 									    html += "</div>";
 									
-									// remove any old file info & error messages
-									$('.jDownloadInfo, .jDownloadError').remove();
+										// remove any old file info & error messages
+										$('.jDownloadInfo, .jDownloadError').remove();
 									
-									var desc = (_this.attr('title').length > 0) ? _this.attr('title') : 'Download the file now?';
+										var desc = (_this.attr('title').length > 0) ? _this.attr('title') : 'Download the file now?';
 									
-									// append new file info
-									dialog.html('<p>'+desc+'</p>'+html);
+										// append new file info
+										dialog.html('<p>'+desc+'</p>'+html);
+										
+									}
+									
+									
 								});
 							}
 	
