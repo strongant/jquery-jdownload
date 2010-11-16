@@ -58,7 +58,7 @@
 		global $mime_type, $ext;		
 				
 		// Check if mimetypes exists in our list
-		$content_type = array_key_exists($ext, $mime_types) ? $mime_types[$ext] : "application/force-download";
+		$content_type = array_key_exists($ext, $mime_types);
 			
 		// Turn off gzip for IE browsers
 		if(ini_get('zlib.output_compression')){
