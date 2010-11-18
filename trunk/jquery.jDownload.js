@@ -1,7 +1,7 @@
 /*
  * jDownload - A jQuery plugin to assist file downloads
  * Examples and documentation at: http://jdownloadplugin.com
- * Version: 1.1 (06/06/2010)
+ * Version: 1.3 (18/11/2010)
  * Copyright (c) 2010 Adam Chambers, Tim Myers
  * Licensed under the GNU General Public License v3: http://www.gnu.org/licenses/gpl.html
  * Requires: jQuery v1.4+ & jQueryUI 1.8+
@@ -89,12 +89,15 @@
 			// if filePath is not specified then use the href attribute
 			var filePath = (settings.filePath == null) ? $(this).attr('href') : settings.filePath;
 			
-			dialog.html('<p>Fetching File...</p><img src="'+settings.root+'jDownload/loader.gif" alt="Loading" />');
+			dialog.html('<p>Fetching File...</p><img src="'+settings.root+'jdownload/loader.gif" alt="Loading" />');
 			
 			$.ajax({
-				type : 'GET',
-				url  : settings.root+'jDownload/jDownload.php',
+				type : 'POST',
+				url  : settings.root+'jdownload/jdownload.php',
 				data : 'action=download&path='+filePath,
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					dialog.html("<p class=\"jDownloadError\">Fatal Error.</p>");
+				},
 				success : function(data) {
 					
 					setTimeout(function() {
@@ -106,7 +109,7 @@
 						
 							if(settings.showfileInfo == true) {
 								
-								var url  = settings.root+'jDownload/jDownload.php?action=info&path='+filePath;
+								var url  = settings.root+'jdownload/jdownload.php?action=info&path='+filePath;
 							
 							
 								// get file information
@@ -159,7 +162,7 @@
 			
 			
 			// change iframe src to fieDownload.php with filePath as query string?? 
-			iframe.attr('src', settings.root+'jDownload/jDownload.php?action=download&path='+dialog.data('jDownloadData').filePath);
+			iframe.attr('src', settings.root+'jdownload/jdownload.php?action=download&path='+dialog.data('jDownloadData').filePath);
 			
 			// Close dialog
 			dialog.dialog('close');

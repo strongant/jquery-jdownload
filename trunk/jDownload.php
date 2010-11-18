@@ -1,5 +1,4 @@
 <?php
-	
 	// initialise functions
 	if($_GET['action'] && $_GET['path']) {
 		
@@ -58,7 +57,7 @@
 		global $mime_type, $ext;		
 				
 		// Check if mimetypes exists in our list
-		$content_type = array_key_exists($ext, $mime_types);
+		$content_type = array_key_exists($ext, $mime_types) ? $mime_types[$ext] : "application/force-download";
 			
 		// Turn off gzip for IE browsers
 		if(ini_get('zlib.output_compression')){
@@ -103,7 +102,5 @@
 			
 		echo json_encode($data);
 	
-	}
-	
-	
+	}	
 ?>
