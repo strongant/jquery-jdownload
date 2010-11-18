@@ -37,6 +37,10 @@
 				die;
 			}
 			
+			// Remove null bytes
+			$file_path = str_replace("\0", "", $file_path);
+			$file_path = str_replace("%00", "", $file_path);
+			
 			// call appropriate function
 			switch($_GET['action']) {
 				case "download":
