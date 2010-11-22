@@ -37,9 +37,8 @@
 				die;
 			}
 			
-			// Remove null bytes
-			$file_path = str_replace("\0", "", $file_path);
-			$file_path = str_replace("%00", "", $file_path);
+			// Check file path for null bytes
+			$file_path = clean_null_byte($file_path);
 			
 			// call appropriate function
 			switch($_GET['action']) {
@@ -107,4 +106,15 @@
 		echo json_encode($data);
 	
 	}	
+	
+	function clean_null_byte($file_path){
+		
+		$null_bytes = array("\0", "%00", "\000", "\x00", "\u0000", "\z");
+		
+		$file_path = str_replace($null_bytes, "", $file_path);
+		
+		return $file_path;
+		
+	}
+	
 ?>
